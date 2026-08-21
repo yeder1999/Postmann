@@ -6,13 +6,6 @@ pipeline {
         }
     }
 
-    parameters {
-        booleanParam(
-            name: 'CICD',
-            defaultValue: true,
-            description: 'Lancer la collection CICD.json'
-        )
-    }
 
     stages {
 
