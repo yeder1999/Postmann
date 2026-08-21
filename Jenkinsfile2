@@ -12,7 +12,7 @@ pipeline{
             stages{
                 stage('Installer Allure') {
                         steps {
-                            sh 'npm install --save-dev newman-reporter-allure'
+                            sh 'npm install -g newman-reporter-allure'
                         }
                 }
                 stage('clean allure results'){
@@ -30,7 +30,6 @@ pipeline{
                 stage('run user test'){
                     steps{  
                         sh"npx newman run CICD.json -e preprod.json --reporters cli,allure --reporter-allure-resultsDir allure-results"
-                        sh "allure generate"     
                     }
                 }
             }
