@@ -1,0 +1,497 @@
+{
+  "info": {
+    "_postman_id": "c9700dbc-fea6-443d-a8ec-9925c68798f6",
+    "name": "CICD",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56157870",
+    "_collection_link": "https://go.postman.co/collection/56157870-c9700dbc-fea6-443d-a8ec-9925c68798f6?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "CreerUser",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "     pm.collectionVariables.set(\"token\",pm.response.json().token)\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nomComplet\": \"{{$randomFirstName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"motdepasse123\",\r\n  \"telephone\": \"0612345678\",\r\n  \"fcm_token\": \"fcm_xxx\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/register/client",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "register",
+            "client"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Exploreevent",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "const events = pm.response.json().events;\r",
+              "let index1 = Math.floor(Math.random() * events.length);\r",
+              "let eventId1 = events[index1].id;\r",
+              "pm.collectionVariables.set(\"eventId1\", eventId1);\r",
+              "\r",
+              "console.log(\"Event 1 :\", eventId1); "
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"page\": 1,\r\n  \"categoryId\": -1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/evenementExplorer",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "evenementExplorer"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ShareEvent",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const fakerTitle = pm.variables.replaceIn(\r",
+              "    \"Je participe à ce concert 🎉 {{ $randomWords }}\"\r",
+              ");\r",
+              "\r",
+              "pm.collectionVariables.set(\"fakerTitle\", fakerTitle);\r",
+              "\r",
+              "console.log(\"Titre :\", fakerTitle);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "console.log(\"Event partagé :\", pm.collectionVariables.get(\"eventId1\"));\r",
+              "console.log(\"Titre :\", pm.collectionVariables.get(\"fakerTitle\"));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"even_id\": {{eventId1}},\r\n  \"titre\": \"{{fakerTitle}}\",\r\n  \"contenu\": \"Je serai là dès 20h\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/posts/share-event",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "posts",
+            "share-event"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Creeruser2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nomComplet\": \"{{$randomFirstName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"motdepasse123\",\r\n  \"telephone\": \"0612345678\",\r\n  \"fcm_token\": \"fcm_xxx\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/register/client",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "register",
+            "client"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AddComment",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"contenu\": \"Super, je viens aussi !\",\r\n  \"parent_id\": null\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/posts/12/comments",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "posts",
+            "12",
+            "comments"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Abonner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/posts/12/like",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "posts",
+            "12",
+            "like"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Notif",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/notifications?page=1&filtre=tous",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "notifications"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "filtre",
+              "value": "tous"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deletecompte",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Compte supprimé\", function () {\r",
+              "    pm.expect(response.success).to.be.true;\r",
+              "    pm.expect(response.message).to.eql(\"Compte supprimé avec succès\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/app/deletecompte",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "app",
+            "deletecompte"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "eventId1",
+      "value": ""
+    },
+    {
+      "key": "fakerTitle",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}

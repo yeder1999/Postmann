@@ -1,0 +1,16 @@
+{
+	"id": "5e5788da-c8f7-4f37-9de0-4b8afd708209",
+	"name": "preprod",
+	"values": [
+		{
+			"key": "url",
+			"value": "https://preprod.thrundrz.fr/backendpublic/public",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"color": null,
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2026-08-21T08:59:42.491Z",
+	"_postman_exported_using": "Postman/12.22.6"
+}
