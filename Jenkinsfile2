@@ -29,7 +29,7 @@ pipeline{
         
                 stage('run user test'){
                     steps{  
-                        sh"npx newman run CICD.json -e preprod.json --reporters cli,allure --reporter-allure-resultsDir allure-results"
+                        sh"newman run CICD.json -e preprod.json --reporters cli,allure --reporter-allure-resultsDir allure-results"
                     }
                 }
             }
