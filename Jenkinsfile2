@@ -12,7 +12,8 @@ pipeline{
             stages{
                 stage('Installer Allure') {
                         steps {
-                            sh 'npm install -g newman-reporter-allure'
+                            sh "npm init -y"
+                            sh 'npm install newman-reporter-allure'
                         }
                 }
                 stage('clean allure results'){
@@ -29,8 +30,7 @@ pipeline{
         
                 stage('run user test'){
                     steps{  
-                        sh"newman run CICD.json --reporter allure"
-                        stash name: 'allure-results', includes: 'allure-results/*'
+                        sh"newman run CICD.json --reporters cli,allure"
                              
                     }
                 }
@@ -39,7 +39,6 @@ pipeline{
     }
     post{
         always{
-                    unstash 'allure-results'
                     archiveArtifacts 'allure-results/*'
                     allure includeProperties: false,
                            jdk: '',
